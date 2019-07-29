@@ -18,3 +18,5 @@ node_modules
 npm-debug.log
 yarn.lock
 vendor
+.rsyncignore-vendor
+cypress_env
