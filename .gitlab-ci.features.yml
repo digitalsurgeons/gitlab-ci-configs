@@ -38,10 +38,10 @@ deploy_feature:
   extends: .deploy
   script:
     - echo "$DEV_DOTENV" > .env
-    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_DEV:/var/www/$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG/
+    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/
   environment:
     name: $CI_COMMIT_REF_NAME
-    url: https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$DEV_DOMAIN
+    url: $FEATURE_DOMAIN
     on_stop: teardown_feature
   only:
     - /^feature\//
@@ -51,7 +51,7 @@ teardown_feature:
   variables:
     GIT_STRATEGY: none
   script:
-    - ssh $SERVER_DETAILS_DEV rm -rf /var/www/$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG/
+    - ssh $SERVER_DETAILS_DEV rm -rf $SERVER_PATH_FEATURE/
   environment:
     name: $CI_COMMIT_REF_NAME
     action: stop

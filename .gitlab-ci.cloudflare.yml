@@ -1,0 +1,10 @@
+clear_cloudflare:
+  image: sebble/deploy
+  script:
+    - "curl -X POST \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"purge_everything\":true}'"
+  stage: deploy
+  environment: production
+  when: manual
+  only:
+    - master
+    - $CLOUDFLARE == "true"

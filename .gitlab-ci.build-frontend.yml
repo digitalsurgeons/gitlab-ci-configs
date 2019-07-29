@@ -16,3 +16,4 @@ build_frontend:
   stage: build
   only:
     - branches
+    - $FRONTEND == "true"
