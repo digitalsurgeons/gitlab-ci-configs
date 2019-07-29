@@ -14,7 +14,7 @@ deploy_prod:
   extends: .deploy
   script:
     - >
-      if [ "$COMPOSER" == "true" ]; then
+      if [ "$RUN_COMPOSER" == "true" ]; then
         rm .rsyncignore-vendor
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/vendor/
@@ -35,7 +35,7 @@ deploy_stage:
   extends: .deploy
   script:
     - >
-      if [ "$COMPOSER" == "true" ]; then
+      if [ "$RUN_COMPOSER" == "true" ]; then
         rm .rsyncignore-vendor
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/vendor/

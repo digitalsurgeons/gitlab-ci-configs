@@ -14,4 +14,4 @@ build_backend:
   stage: build
   only:
     - branches
-    - $COMPOSER == "true"
+    - $RUN_COMPOSER == "true"
