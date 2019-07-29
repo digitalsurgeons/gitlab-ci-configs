@@ -26,6 +26,7 @@
 deploy_dev:
   extends: .deploy
   script:
+    - echo $CI_COMMIT_MESSAGE
     - >
       if [ "$RUN_COMPOSER" == "true" ] && [ "$CI_COMMIT_MESSAGE" != *"skip-backend-build"* ]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
