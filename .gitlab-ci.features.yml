@@ -32,6 +32,7 @@ deploy_dev:
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/vendor/
       fi
     - echo "$DEV_DOTENV" > .env
+    - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
     - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/
   environment:
     name: development
@@ -49,6 +50,7 @@ deploy_feature:
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_FEATURE:$SERVER_PATH_FEATURE/vendor/
       fi
     - echo "$DEV_DOTENV" > .env
+    - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
     - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_FEATURE:$SERVER_PATH_FEATURE/
   environment:
     name: $CI_COMMIT_REF_NAME
