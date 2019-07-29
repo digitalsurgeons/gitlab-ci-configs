@@ -26,8 +26,15 @@
 deploy_dev:
   extends: .deploy
   script:
+    - >
+      if [ "$COMPOSER" == "true" ]; then
+        rm .rsyncignore-vendor
+        curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
+        rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/vendor/
+      fi
+    - rm .rsyncignore
     - echo "$DEV_DOTENV" > .env
-    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_DEV:/var/www/$CI_PROJECT_NAME/
+    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/
   environment:
     name: development
     url: https://$CI_PROJECT_NAME.$DEV_DOMAIN

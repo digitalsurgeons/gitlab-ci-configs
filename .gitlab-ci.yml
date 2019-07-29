@@ -1,6 +1,6 @@
 include:
   # Generic dev/feature deployments
-  - remote: '/.gitlab-ci.features.yml'
+  - local: '/.gitlab-ci.features.yml'
   # Generic front-end build:
   - local: '/.gitlab-ci.build-frontend.yml'
   # Generic composer build:
@@ -19,6 +19,7 @@ deploy_prod:
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/vendor/
       fi
+    - echo "$PRD_DOTENV" > .env
     - rm .rsyncignore .rsyncignore-vendor
     - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
     - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/
@@ -38,6 +39,7 @@ deploy_stage:
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/vendor/
       fi
+    - echo "$STG_DOTENV" > .env
     - rm .rsyncignore
     - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
     - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/
