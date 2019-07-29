@@ -40,6 +40,7 @@ deploy_dev:
     url: https://$CI_PROJECT_NAME.$DEV_DOMAIN
   only:
     - develop
+    - $DEVELOP == "true"
 
 deploy_feature:
   extends: .deploy
@@ -52,6 +53,7 @@ deploy_feature:
     on_stop: teardown_feature
   only:
     - /^feature\//
+    - $FEATURE == "true"
 
 teardown_feature:
   extends: .deploy
@@ -65,3 +67,4 @@ teardown_feature:
   when: manual
   only:
     - /^feature\//
+    - $FEATURE == "true"

@@ -29,6 +29,7 @@ deploy_prod:
   when: manual
   only:
     - master
+    - $PRODUCTION == "true"
 
 deploy_stage:
   extends: .deploy
@@ -52,3 +53,4 @@ deploy_stage:
     # out a branch. This leads to fewer version bumps and less repo
     # noise.
     - /^(master|hotfix\/|release\/)/
+    - $STAGING == "true"
