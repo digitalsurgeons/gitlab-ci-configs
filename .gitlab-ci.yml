@@ -16,7 +16,7 @@ deploy_prod:
     - >
       if [ "$RUN_COMPOSER" == "true" ]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
-        rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/vendor/
+        rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/vendor/
       fi
     - echo "$PRD_DOTENV" > .env
     - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
@@ -35,7 +35,7 @@ deploy_stage:
     - >
       if [ "$RUN_COMPOSER" == "true" ]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
-        rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' --delete ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/vendor/
+        rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/vendor/
       fi
     - echo "$STG_DOTENV" > .env
     - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
