@@ -14,7 +14,7 @@ deploy_prod:
   extends: .deploy
   script:
     - >
-      if [ "$RUN_COMPOSER" == "true" ] && [ "$CI_COMMIT_MESSAGE" != *"skip-backend-build"* ]; then
+      if [ $RUN_COMPOSER == "true" ] && [ $CI_COMMIT_MESSAGE != *"skip-backend-build"* ]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/vendor/
       fi
@@ -37,7 +37,7 @@ deploy_stage:
   extends: .deploy
   script:
     - >
-      if [ "$RUN_COMPOSER" == "true" && [ "$CI_COMMIT_MESSAGE" != *"skip-backend-build"* ] ]; then
+      if [ $RUN_COMPOSER == "true" && [ $CI_COMMIT_MESSAGE != *"skip-backend-build"* ] ]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/vendor/
       fi
