@@ -15,3 +15,7 @@ build_backend:
   only:
     - branches
     - $RUN_COMPOSER == "true"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-backend-build/
+      - $CI_COMMIT_MESSAGE =~ /skip-build/

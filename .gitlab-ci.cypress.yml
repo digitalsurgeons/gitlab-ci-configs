@@ -27,4 +27,7 @@ test:
   only:
     - branches
     - $TEST == "true"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-tests/
 

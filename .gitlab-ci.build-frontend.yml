@@ -17,3 +17,7 @@ build_frontend:
   only:
     - branches
     - $FRONTEND == "true"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-frontend-build/
+      - $CI_COMMIT_MESSAGE =~ /skip-build/

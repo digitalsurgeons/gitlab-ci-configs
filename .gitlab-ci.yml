@@ -28,6 +28,10 @@ deploy_prod:
   only:
     - master
     - $PRODUCTION == "true"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-prod-deploy/
+      - $CI_COMMIT_MESSAGE =~ /skip-deploy/
 
 deploy_stage:
   extends: .deploy
@@ -50,3 +54,7 @@ deploy_stage:
     # noise.
     - /^(master|hotfix\/|release\/)/
     - $STAGING == "true"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-stg-deploy/
+      - $CI_COMMIT_MESSAGE =~ /skip-deploy/

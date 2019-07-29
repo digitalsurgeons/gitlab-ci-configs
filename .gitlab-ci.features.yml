@@ -40,6 +40,10 @@ deploy_dev:
   only:
     - develop
     - $DEVELOP == "true"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-dev-deploy/
+      - $CI_COMMIT_MESSAGE =~ /skip-deploy/
 
 deploy_feature:
   extends: .deploy
@@ -59,6 +63,10 @@ deploy_feature:
   only:
     - /^feature\//
     - $FEATURE == "true"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-feature-deploy/
+      - $CI_COMMIT_MESSAGE =~ /skip-deploy/
 
 teardown_feature:
   extends: .deploy
