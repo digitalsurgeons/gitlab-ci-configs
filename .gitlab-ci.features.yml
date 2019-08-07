@@ -30,7 +30,7 @@ deploy_dev:
     - >
       if [[ $RUN_COMPOSER == "true" ]]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
-        rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/vendor/
+        rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./vendor/ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/vendor/
       fi
     - echo "$DEV_DOTENV" > .env
     - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
