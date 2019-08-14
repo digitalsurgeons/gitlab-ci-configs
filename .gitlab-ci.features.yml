@@ -39,8 +39,10 @@ deploy_dev:
     name: development
     url: https://$CI_PROJECT_NAME.$DEV_DOMAIN
   only:
-    - develop
-    - $DEVELOP == "true"
+    refs:
+      - develop
+    variables:
+      - $DEVELOP == "true"
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /skip-dev-deploy/
@@ -62,8 +64,10 @@ deploy_feature:
     url: $FEATURE_DOMAIN
     on_stop: teardown_feature
   only:
-    - /^feature\//
-    - $FEATURE == "true"
+    refs:
+      - /^feature\//
+    variables:
+      - $FEATURE == "true"
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /skip-feature-deploy/
@@ -80,5 +84,7 @@ teardown_feature:
     action: stop
   when: manual
   only:
-    - /^feature\//
-    - $FEATURE == "true"
+    refs:
+      - /^feature\//
+    variables:
+      - $FEATURE == "true"

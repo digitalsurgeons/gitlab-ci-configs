@@ -13,8 +13,10 @@ build_backend:
     expire_in: 2 mos
   stage: build
   only:
-    - branches
-    - $RUN_COMPOSER == "true"
+    refs:
+      - branches
+    variables:
+      - $RUN_COMPOSER == "true"
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /skip-backend-build/

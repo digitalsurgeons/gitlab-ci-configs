@@ -15,8 +15,10 @@ build_frontend:
     expire_in: 2 mos
   stage: build
   only:
-    - branches
-    - $FRONTEND == "true"
+    refs:
+      - branches
+    variables:
+      - $FRONTEND == "true"
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /skip-frontend-build/

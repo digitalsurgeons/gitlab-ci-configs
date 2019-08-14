@@ -6,5 +6,7 @@ clear_cloudflare:
   environment: production
   when: manual
   only:
-    - master
-    - $CLOUDFLARE == "true"
+    refs:
+      - master
+    variables:
+      - $CLOUDFLARE == "true"

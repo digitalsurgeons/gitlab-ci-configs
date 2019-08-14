@@ -25,8 +25,10 @@ test:
   stage: test
   when: manual
   only:
-    - branches
-    - $TEST == "true"
+    refs:
+      - branches
+    variables:
+      - $TEST == "true"
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /skip-tests/

@@ -26,8 +26,10 @@ deploy_prod:
     url: $PRD_DOMAIN
   when: manual
   only:
-    - master
-    - $PRODUCTION == "true"
+    refs:
+      - master
+    variables:
+      - $PRODUCTION == "true"
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /skip-prod-deploy/
@@ -48,12 +50,14 @@ deploy_stage:
     name: staging
     url: $STG_DOMAIN
   only:
-    # Deploy from hotfix and release branches as well as master, so we
-    # can test and make modifications on those branches before finishing
-    # out a branch. This leads to fewer version bumps and less repo
-    # noise.
-    - /^(master|hotfix\/|release\/)/
-    - $STAGING == "true"
+    refs:
+      # Deploy from hotfix and release branches as well as master, so we
+      # can test and make modifications on those branches before finishing
+      # out a branch. This leads to fewer version bumps and less repo
+      # noise.
+      - /^(master|hotfix\/|release\/)/
+    variables:
+      - $STAGING == "true"
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /skip-stg-deploy/
