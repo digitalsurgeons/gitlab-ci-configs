@@ -1,0 +1,21 @@
+.deploy:
+  image: sebble/deploy
+  before_script:
+    # Set up the .ssh directory
+    - mkdir ~/.ssh
+    - chmod 0700 ~/.ssh
+    # Adds host keys for all deployed environments, so we know when something goes wrong
+    - echo -n "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 0600 ~/.ssh/known_hosts
+    # Adds private key so we can connect to destination server
+    - echo -n "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+    - chmod 0600 ~/.ssh/id_ed25519
+    # Export the environment url, which only exists in the child jobs,
+    # so that we can set cypress' base url in the test phase
+    - echo -n "$CI_ENVIRONMENT_URL" > cypress_env
+  artifacts:
+    paths:
+      - cypress_env
+  stage: deploy
+
+

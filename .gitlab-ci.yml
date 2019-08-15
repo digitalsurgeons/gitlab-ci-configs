@@ -1,4 +1,5 @@
 include:
+  - local: '/.gitlab-ci.deployments.yml'
   # Generic dev/feature deployments
   - local: '/.gitlab-ci.features.yml'
   # Generic front-end build:
