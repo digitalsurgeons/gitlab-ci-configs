@@ -8,7 +8,7 @@ deploy_dev:
   script:
     - echo $CI_COMMIT_MESSAGE
     - >
-      if [[ $RUN_COMPOSER == "true" ]]; then
+      if [[ $RUN_COMPOSER == "true" ]] && ! [[ $CI_COMMIT_MESSAGE =~ ".*skip-backend-build.*" ]]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./vendor/ $SERVER_DETAILS_DEV:$SERVER_PATH_DEV/vendor/
       fi
@@ -32,7 +32,7 @@ deploy_feature:
   extends: .deploy
   script:
     - >
-      if [ $RUN_COMPOSER == "true" ] && [ $CI_COMMIT_MESSAGE != *"skip-backend-build"* ]; then
+      if [[ $RUN_COMPOSER == "true" ]] && ! [[ $CI_COMMIT_MESSAGE =~ ".*skip-backend-build.*" ]]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./ $SERVER_DETAILS_FEATURE:$SERVER_PATH_FEATURE/vendor/
       fi
