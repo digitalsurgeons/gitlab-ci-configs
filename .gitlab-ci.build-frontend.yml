@@ -1,9 +1,16 @@
 # Build steps for boilerplate frontend
 build_frontend:
-  image: node:9
+  image: node:$NODE_VERSION
   script:
+    # Update npm to ensure ci command present
+    # TODO: This will eventually cause failures if and when npm itself
+    # can no longer run on an earlier version of node. As of the time
+    # this change was introduced, the latest npm works all the way back
+    # to node 6, so we're going to chance it until npm introduces some
+    # breaking change.
+    - npm -g i npm
     # Install dependencies
-    - npm install
+    - npm ci
     - npm run prod
   cache:
     key: npm
