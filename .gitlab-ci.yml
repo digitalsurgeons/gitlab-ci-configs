@@ -14,14 +14,14 @@ include:
 deploy_prod:
   extends: .deploy
   script:
+    - echo "$PRD_DOTENV" > .env
+    - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
+    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/
     - >
       if [[ $RUN_COMPOSER == "true" ]] && ! [[ "$CI_COMMIT_MESSAGE" =~ ".*skip-backend-build.*" ]]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./vendor/ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/vendor/
       fi
-    - echo "$PRD_DOTENV" > .env
-    - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
-    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_PRD:$SERVER_PATH_PRD/
   environment:
     name: production
     url: $PRD_DOMAIN
@@ -39,14 +39,14 @@ deploy_prod:
 deploy_stage:
   extends: .deploy
   script:
+    - echo "$STG_DOTENV" > .env
+    - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
+    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/
     - >
       if [[ $RUN_COMPOSER == "true" ]] && ! [[ "$CI_COMMIT_MESSAGE" =~ ".*skip-backend-build.*" ]]; then
         curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore-vendor
         rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore-vendor' --delete ./vendor/ $SERVER_DETAILS_STG:$SERVER_PATH_STG/vendor/
       fi
-    - echo "$STG_DOTENV" > .env
-    - curl -O -L https://gitlab.com/digitalsurgeons/gitlab-ci-configs/raw/master/.rsyncignore
-    - rsync --copy-unsafe-links -rvzcSl --exclude-from '.rsyncignore' ./ $SERVER_DETAILS_STG:$SERVER_PATH_STG/
   environment:
     name: staging
     url: $STG_DOMAIN
