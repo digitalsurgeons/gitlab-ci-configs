@@ -40,7 +40,7 @@ deploy_feature:
       fi
   environment:
     name: $CI_COMMIT_REF_NAME
-    url: $FEATURE_DOMAIN
+    url: https://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$FEATURE_DOMAIN
     on_stop: teardown_feature
   only:
     refs:
