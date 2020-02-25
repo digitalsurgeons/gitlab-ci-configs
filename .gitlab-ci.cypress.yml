@@ -7,16 +7,11 @@ stages:
 
 # Manually run cypress integration testing
 test:
-  image: cypress/browsers:node11.13.0-chrome73
+  image: cypress/included:4.0.2
   script:
     - export CYPRESS_BASE_URL=$(cat cypress_env)
     - echo $CYPRESS_BASE_URL
-    - npm install cypress
-    - $(npm bin)/cypress run
-  cache:
-    key: cypress
-    paths:
-      - node_modules/
+    - cypress run --headless -b chrome
   artifacts:
     paths:
       - cypress/screenshots
