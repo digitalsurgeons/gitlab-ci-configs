@@ -11,7 +11,7 @@ test:
   script:
     - export CYPRESS_BASE_URL=$(cat cypress_env)
     - echo $CYPRESS_BASE_URL
-    - cypress run --headless -b chrome
+    - cypress run
   artifacts:
     paths:
       - cypress/screenshots
